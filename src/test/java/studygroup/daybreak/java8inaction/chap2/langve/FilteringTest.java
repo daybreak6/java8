@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import studygroup.daybreak.java8inaction.util.AppleUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -17,7 +17,7 @@ public class FilteringTest {
     @Test
     public void filterGreenApples_1번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
 
         // when
         List<Apple> greenApples = FilteringApples.fileterGreenApples(apples);
@@ -32,7 +32,7 @@ public class FilteringTest {
     @Test
     public void filterApplesByColor_2번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
         String color = "red";
 
         // when
@@ -48,7 +48,7 @@ public class FilteringTest {
     @Test
     public void fileterApples_3번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
         String color = "red";
         int weight = 150;
         final boolean flagOfColor = true;
@@ -71,7 +71,7 @@ public class FilteringTest {
     @Test
     public void filterApples_4번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
         ApplePredicate applePredicate = new AppleRedAndHeavyPredicate();
 
         // when
@@ -88,7 +88,7 @@ public class FilteringTest {
     @Test
     public void filterApples_5번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
 
         // when
         List<Apple> actualApples = FilteringApples.filterApples(apples, new ApplePredicate() {
@@ -107,7 +107,7 @@ public class FilteringTest {
     @Test
     public void filterApples_6번째시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
 
         // when
         List<Apple> actualApples = FilteringApples.filterApples(apples, (Apple apple) -> "red".equals(apple.getColor()));
@@ -121,7 +121,7 @@ public class FilteringTest {
     @Test
     public void filter_7번재시도() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
         List<Integer> numbers = Arrays.asList(1, 2, 3);
 
         // when
@@ -142,7 +142,7 @@ public class FilteringTest {
     @Test
     public void compare_익명클래스() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
 
         // when
         apples.sort(new Comparator<Apple>() {
@@ -160,7 +160,7 @@ public class FilteringTest {
     @Test
     public void compare_람다식() {
         // given
-        List<Apple> apples = getApples();
+        List<Apple> apples = AppleUtils.getApples();
 
         // when
         apples.sort((Apple apple1, Apple apple2) -> apple1.getWeight().compareTo(apple2.getWeight()));
@@ -170,27 +170,11 @@ public class FilteringTest {
         Assert.assertEquals(Integer.valueOf(200), apples.get(apples.size() - 1).getWeight());
     }
 
-    private List<Apple> getApples() {
-        List<Apple> apples = new ArrayList<>();
-        apples.add(new Apple("red", 200));
-        apples.add(new Apple("green", 100));
-        apples.add(new Apple("green1", 100));
-        apples.add(new Apple("green2", 100));
-        apples.add(new Apple("green3", 100));
-        apples.add(new Apple("green4", 100));
-        apples.add(new Apple("green5", 100));
-        apples.add(new Apple("green6", 100));
-        apples.add(new Apple("green7", 100));
-        apples.add(new Apple("green8", 100));
-        apples.add(new Apple("green9", 100));
-        return apples;
-    }
-
     @Test
     public void runnable_익명클래스() {
         try {
             // given
-            List<Apple> apples = getApples();
+            List<Apple> apples = AppleUtils.getApples();
             for (Apple apple : apples) {
 
                 // when
@@ -214,7 +198,7 @@ public class FilteringTest {
     public void runnable_람다식() {
         try {
             // given
-            List<Apple> apples = getApples();
+            List<Apple> apples = AppleUtils.getApples();
             for (Apple apple : apples) {
 
                 // when
