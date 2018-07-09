@@ -154,7 +154,7 @@ public class FilteringTest {
 
         // then
         Assert.assertEquals(Integer.valueOf(100), apples.get(0).getWeight());
-        Assert.assertEquals(Integer.valueOf(200), apples.get(1).getWeight());
+        Assert.assertEquals(Integer.valueOf(200), apples.get(apples.size() - 1).getWeight());
     }
 
     @Test
@@ -167,7 +167,7 @@ public class FilteringTest {
 
         // then
         Assert.assertEquals(Integer.valueOf(100), apples.get(0).getWeight());
-        Assert.assertEquals(Integer.valueOf(200), apples.get(1).getWeight());
+        Assert.assertEquals(Integer.valueOf(200), apples.get(apples.size() - 1).getWeight());
     }
 
     private List<Apple> getApples() {
