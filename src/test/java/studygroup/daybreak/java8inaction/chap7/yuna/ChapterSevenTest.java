@@ -28,4 +28,9 @@ public class ChapterSevenTest {
         logger.debug("measureSumPerf parallelRangedSum in [ {} ] msecs", ChapterSeven.measureSumPerf(ChapterSeven::parallelRangedSum, 10_000_000));
     }
 
+    @Test
+    public void 병렬스레드테스트() {
+        logger.debug("measureSumPerf forkJoinSum in [ {} ] msecs", ChapterSeven.measureSumPerf(ForkJoinSumCalculator::forkJoinSum, 10_000_000L));
+    }
+
 }
