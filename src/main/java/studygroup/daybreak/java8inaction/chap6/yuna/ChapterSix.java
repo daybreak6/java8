@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import studygroup.daybreak.java8inaction.chap5.yuna.Dish;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -172,6 +174,7 @@ public class ChapterSix {
         logger.debug("quiz3 : {}", quiz3);
     }
 
+
     public static <T> Collector<T, ? ,Long> counting() {
         return Collectors.reducing(0L, e-> 1L, Long::sum);
     }
@@ -181,12 +184,46 @@ public class ChapterSix {
 //        return IntStream.range(2, candidate).noneMatch( i -> candidate % i == 0);
 
         // 주어진 수의 제곱근 이하로 제한
-        int candidatRoot = (int) Math.sqrt((double) candidate);
-        return IntStream.rangeClosed(2, candidatRoot).noneMatch( i -> candidate % i == 0);
+        int candidateRoot = (int) Math.sqrt((double) candidate);
+        return IntStream.rangeClosed(2, candidateRoot).noneMatch( i -> candidate % i == 0);
     }
 
     //    isPrime을 predicate로 이용한 소수, 비소수 구분
     public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
         return IntStream.rangeClosed(2, n).boxed().collect(Collectors.partitioningBy(candidate -> isPrime(candidate)));
+    }
+
+    public static Map<Boolean, List<Integer>> partitionPrimesWithCustomCollector(int n) {
+        return IntStream.rangeClosed(2, n).boxed().collect(new PrimeNumbersCollector());
+    }
+
+    //    전체 stream을 처리한 후 결과를 반환하는 filter 대신 대상의 제곱보다 큰 소수를 찾으면 검사를 중단하는
+    public static <A> List<A> takeWhile(List<A> list, Predicate<A> p) {
+        int i = 0;
+        for(A item: list) {
+            if(!p.test(item)) {
+                return list.subList(0, i);
+            }
+            i++;
+        }
+        return list;
+    }
+
+    public static boolean isPrime(List<Integer> primes, int candidate) {
+        int candidateRoot = (int) Math.sqrt((double) candidate);
+        return takeWhile(primes, i -> i <= candidateRoot).stream().noneMatch(p -> candidate % p == 0);
+    }
+
+    public static long collectorHarness(Consumer<Integer> primePartitioner) {
+        long fastest = Long.MAX_VALUE;
+        for(int i = 0; i < 10; i++) {
+            long start = System.nanoTime();
+            primePartitioner.accept(1_000_000);
+            long duration = (System.nanoTime() - start) / 1_000_000;
+            if(duration < fastest) {
+                fastest = duration;
+            }
+        }
+        return fastest;
     }
 }

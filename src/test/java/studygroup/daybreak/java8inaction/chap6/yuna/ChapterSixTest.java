@@ -37,6 +37,13 @@ public class ChapterSixTest {
 
     @Test
     public void 소수테스트() {
-        logger.debug("isPrime : {}", ChapterSix.partitionPrimes(30));
+        logger.debug("isPrime : {}", com.yuna.inaction.ChapterSix.partitionPrimes(30));
+        logger.debug("isPrime custom : {}", com.yuna.inaction.ChapterSix.partitionPrimesWithCustomCollector(100));
+    }
+
+    @Test
+    public void 스피드테스트() {
+        logger.debug("partitioning(partitionPrimes) done in : [ {} ] msecs", com.yuna.inaction.ChapterSix.collectorHarness(com.yuna.inaction.ChapterSix::partitionPrimes));
+        logger.debug("partitioning(partitionPrimesWithCustomCollector) done in : [ {} ] msecs", com.yuna.inaction.ChapterSix.collectorHarness(com.yuna.inaction.ChapterSix::partitionPrimesWithCustomCollector));
     }
 }
