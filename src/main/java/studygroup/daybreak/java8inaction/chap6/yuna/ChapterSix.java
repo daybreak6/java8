@@ -48,6 +48,7 @@ public class ChapterSix {
         logger.info("shortMenu : {}" + shortMenu);
     }
 
+
     public static void reducingTest() {
 
         int totalCalories = Dish.menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
@@ -73,9 +74,46 @@ public class ChapterSix {
 
     }
 
+    enum CaloricLevel { DIET, NORMAL, FAT }
+
     public static void groupingTest() {
         Map<Dish.Type, List<Dish>> dishesByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType));
         logger.info("dishesByType : {}" + dishesByType.toString());
+
+        Map<CaloricLevel, List<Dish>> dishesByCaloricLevel = Dish.menu.stream().collect(
+                Collectors.groupingBy(dish -> {
+                    if (dish.getCalories() <= 400) {
+                        return CaloricLevel.DIET;
+                    } else if (dish.getCalories() <= 700) {
+                        return CaloricLevel.NORMAL;
+                    } else {
+                        return CaloricLevel.FAT;
+                    }
+                })
+        );
+
+        logger.info("dishesByCaloricLevel : {}" + dishesByCaloricLevel);
+
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy(dish -> {
+            if (dish.getCalories() <= 400) {
+                return CaloricLevel.DIET;
+            } else if (dish.getCalories() <= 700) {
+                return CaloricLevel.NORMAL;
+            } else {
+                return CaloricLevel.FAT;
+            }
+        })));
+        logger.info("dishesByTypeCaloricLevel : {}" + dishesByTypeCaloricLevel);
+
+        Map<Dish.Type, Long> typesCount = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, counting()));
+        logger.info("typesCount : {}" + typesCount);
+
+        Map<Dish.Type, Optional<Dish>> mostCaloricByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.maxBy(Comparator.comparingInt(Dish::getCalories))));
+        logger.info("mostCaloricByType : {}" + mostCaloricByType);
+
+        Map<Dish.Type, Dish> mostCaloricByType2 = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
+        logger.info("mostCaloricByType2 : {}" + mostCaloricByType2);
+
     }
 
     public static <T> Collector<T, ? ,Long> counting() {
