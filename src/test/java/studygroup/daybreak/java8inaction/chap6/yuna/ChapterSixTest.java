@@ -30,4 +30,13 @@ public class ChapterSixTest {
         ChapterSix.groupingTest();
     }
 
+    @Test
+    public void 파티셔닝테스트() {
+        ChapterSix.partitioningTest();
+    }
+
+    @Test
+    public void 소수테스트() {
+        logger.debug("isPrime : {}", ChapterSix.partitionPrimes(30));
+    }
 }
