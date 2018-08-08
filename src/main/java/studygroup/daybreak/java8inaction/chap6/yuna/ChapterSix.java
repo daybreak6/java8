@@ -1,4 +1,4 @@
-package studygroup.daybreak.java8inaction.chap6.yuna;
+package com.yuna.inaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
