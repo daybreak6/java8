@@ -7,4 +7,5 @@
 * [스터디 정보](https://github.com/daybreak6/java8/wiki/스터디-정보)
 * [스터디 일정](https://github.com/daybreak6/java8/wiki/스터디-일정)
 * [스터디 내용](https://github.com/daybreak6/java8/wiki/스터디-내용)
+* [스터디 활동](https://github.com/daybreak6/java8/issues?q=is%3Aissue%20state%3Aclosed)
 * [공유자료](https://github.com/daybreak6/java8/wiki/공유자료)
